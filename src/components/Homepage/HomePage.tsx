@@ -1,8 +1,9 @@
 import millify from "millify";
 import {Col, Row, Statistic, Typography} from "antd";
-import {Cryptocurrencies} from "../Cryptocurrencies/Cryptocurrencies.tsx";
+import {Cryptocurrencies} from "../Cryptocurrencies/Cryptocurrencies";
 import {Link} from "react-router-dom";
-import {News} from "../News/News.tsx";
+import {News} from "../News/News";
+import {useGetCryptosQuery} from "../../services/cryptoApi";
 
 
 const { Title } = Typography;
@@ -13,20 +14,19 @@ function Loader() {
 
 export const HomePage = () => {
     // const { data, isFetching } = useGetCryptosQuery(10);
-    // const globalStats = data?.data?.stats;
-    //
-    // if (isFetching) return <Loader />;
+    const globalStats = data?.data?.stats;
+
+    if (isFetching) return 'Loading...';
 
     return (
         <>
             <Title level={2} className="heading">Мировая статистика по криптовалютам</Title>
             <Row gutter={[32, 32]}>
-                <Col span={12}><Statistic title="Общее число криптовалют" /></Col>
-                <Col span={12}><Statistic title="Общее число бирж" /></Col>
-                <Col span={12}><Statistic title="Общая рыночная капитализация:" /></Col>
-                <Col span={12}><Statistic title="Общий объем за 24 часа" /></Col>
-                <Col span={12}><Statistic title="Общее число криптовалют" /></Col>
-                <Col span={12}><Statistic title="Общее число рынков" /></Col>
+                <Col span={12}><Statistic title="Общее число криптовалют" value={globalStats.total} /></Col>
+                <Col span={12}><Statistic title="Общее число бирж" value={millify(globalStats.totalExchanges)} /></Col>
+                <Col span={12}><Statistic title="Общая рыночная капитализация:" value={millify(globalStats.totalMarketCap)} /></Col>
+                <Col span={12}><Statistic title="Общий объем за 24 часа" value={millify(globalStats.total24hVolume)} /></Col>
+                <Col span={12}><Statistic title="Общее число рынков" value={millify(globalStats.totalMarkets)} /></Col>
             </Row>
             <div className="home-heading-container">
                 <Title level={2} className="home-title">Топ 10 криптовалют</Title>

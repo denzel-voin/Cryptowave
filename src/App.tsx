@@ -28,7 +28,7 @@ function App() {
                 <div className='footer'>
                     <Typography.Title level={5} style={{color: "white", textAlign: "center"}}>
                         CryptoWave <br/>
-                        all rights reserved
+                        All rights reserved
                     </Typography.Title>
                     <Space>
                         <Link to='/'>Главная</Link>
