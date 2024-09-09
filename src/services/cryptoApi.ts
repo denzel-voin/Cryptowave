@@ -29,7 +29,27 @@ export const cryptoApi = createApi({
             query: (count) => createRequest(`/coins?limit=${count}`),
             keepUnusedDataFor: 14400, // хранить данные в течение 4 часов
         }),
+
+        getCryptoDetails: builder.query({
+            query: (coinId) => createRequest(`/coin/${coinId}`),
+            keepUnusedDataFor: 14400, // хранить данные в течение 4 часов
+        }),
+
+        getCryptoHistory: builder.query({
+            query: ({ coinId, timeperiod }) => createRequest(`coin/${coinId}/history?timeperiod=${timeperiod}`),
+            keepUnusedDataFor: 14400, // хранить данные в течение 4 часов
+        }),
+
+        getExchanges: builder.query({
+            query: () => createRequest('/exchanges'),
+            keepUnusedDataFor: 14400, // хранить данные в течение 4 часов
+        }),
     }),
 });
 
-export const { useGetCryptosQuery } = cryptoApi;
+export const {
+    useGetCryptosQuery,
+    useGetCryptoDetailsQuery,
+    useGetExchangesQuery,
+    useGetCryptoHistoryQuery,
+} = cryptoApi;
