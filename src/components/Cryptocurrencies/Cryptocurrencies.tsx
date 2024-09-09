@@ -46,9 +46,9 @@ export const Cryptocurrencies = ({ simplified }) => {
                                 extra={<img className="crypto-image" src={currency.iconUrl} />}
                                 hoverable
                             >
-                                <p>Цена: {millify(currency.price)}</p>
-                                <p>Рыночная капитализация: {millify(currency.marketCap)}</p>
-                                <p>Изменение за день: {currency.change}%</p>
+                                <p>Цена: {millify(currency.price) + '$'}</p>
+                                <p>Рыночная капитализация: {millify(currency.marketCap) + '$'}</p>
+                                <p style={Number(currency.change) > 0 ? {color: "green"} : {color: "red"}}>Изменение за день: {currency.change}%</p>
                             </Card>
                         </Link>
                     </Col>

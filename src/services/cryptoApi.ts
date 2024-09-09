@@ -15,7 +15,7 @@ interface CryptosResponse {
 const cryptoApiHeaders = {
     'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
     'x-rapidapi-key': '3898d1509cmsh5691a26141948cep1c5250jsnc005710d8a3b'
-}
+};
 
 const baseUrl = 'https://coinranking1.p.rapidapi.com';
 
@@ -27,6 +27,7 @@ export const cryptoApi = createApi({
     endpoints: (builder) => ({
         getCryptos: builder.query<CryptosResponse, void>({
             query: (count) => createRequest(`/coins?limit=${count}`),
+            keepUnusedDataFor: 14400, // хранить данные в течение 4 часов
         }),
     }),
 });

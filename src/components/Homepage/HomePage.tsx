@@ -13,7 +13,7 @@ function Loader() {
 }
 
 export const HomePage = () => {
-    // const { data, isFetching } = useGetCryptosQuery(10);
+    const { data, isFetching } = useGetCryptosQuery(10);
     const globalStats = data?.data?.stats;
 
     if (isFetching) return 'Loading...';
@@ -24,8 +24,8 @@ export const HomePage = () => {
             <Row gutter={[32, 32]}>
                 <Col span={12}><Statistic title="Общее число криптовалют" value={globalStats.total} /></Col>
                 <Col span={12}><Statistic title="Общее число бирж" value={millify(globalStats.totalExchanges)} /></Col>
-                <Col span={12}><Statistic title="Общая рыночная капитализация:" value={millify(globalStats.totalMarketCap)} /></Col>
-                <Col span={12}><Statistic title="Общий объем за 24 часа" value={millify(globalStats.total24hVolume)} /></Col>
+                <Col span={12}><Statistic title="Общая рыночная капитализация:" value={millify(globalStats.totalMarketCap) + '$'} /></Col>
+                <Col span={12}><Statistic title="Общий объем за 24 часа" value={millify(globalStats.total24hVolume) + '$'} /></Col>
                 <Col span={12}><Statistic title="Общее число рынков" value={millify(globalStats.totalMarkets)} /></Col>
             </Row>
             <div className="home-heading-container">
