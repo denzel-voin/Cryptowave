@@ -7,14 +7,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "npx prettier . --write",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.20.5",
     "axios": "^1.7.7",
-    "chart.js": "^3.9.1",
+    "chart.js": "^4.4.4",
     "chartjs-adapter-date-fns": "^3.0.0",
     "html-react-parser": "^5.1.15",
     "millify": "^6.1.0",
@@ -33,7 +35,9 @@
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
+    "gh-pages": "^5.0.0",
     "globals": "^15.9.0",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
