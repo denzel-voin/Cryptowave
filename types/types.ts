@@ -118,3 +118,32 @@ export interface LineChartProps {
     currentPrice: number;
     coinName: string;
 }
+
+export interface RootDataset {
+    labels: string[]
+    datasets: Dataset[]
+}
+
+export interface Dataset {
+    label: string
+    data: number[]
+    fill: boolean
+    backgroundColor: string
+    borderColor: string
+}
+
+export interface RootScales {
+    scales: Scales
+}
+
+export interface Scales {
+    yAxes: YAx[]
+}
+
+export interface YAx {
+    ticks: Ticks
+}
+
+export interface Ticks {
+    beginAtZero: boolean
+}

@@ -1,84 +1,61 @@
-import { Line } from "react-chartjs-2";
-import { Col, Row, Typography } from "antd";
-import {
-  Chart as ChartJS,
-  Tooltip,
-  Legend,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-} from "chart.js";
-import "chartjs-adapter-date-fns";
-import {LineChartProps} from "../../../types/types.ts";
-import {FC} from "react";
+import { Line } from 'react-chartjs-2';
+import { Col, Row, Typography } from 'antd';
+import { Chart as ChartJS, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale, TimeScale } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import {LineChartProps, RootDataset, RootScales} from "../../../types/types.ts";
 
-ChartJS.register(
-  Tooltip,
-  Legend,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-);
+ChartJS.register(Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale, TimeScale);
 
 const { Title } = Typography;
 
-export const LineChart: FC<LineChartProps> = ({ coinHistory, currentPrice, coinName }) => {
-  if (!coinHistory) {
-    return <div>Загрузка...</div>; // Или другой резервный UI
+export const LineChart = ({ coinHistory, currentPrice, coinName }: LineChartProps) => {
+  const coinPrice: number[] = [];
+  const coinTimestamp: string[] = [];
+
+  if (coinHistory.data.history) {
+    for (const entry of coinHistory.data.history) {
+      coinPrice.unshift(Number(entry.price));
+      coinTimestamp.unshift(
+          new Date(entry.timestamp * 1000).toLocaleTimeString('ru-RU', {
+            hour: 'numeric',
+            minute: 'numeric',
+          })
+      );
+    }
   }
 
-  const coinPrice = [];
-  const coinTimestamp = [];
-
-  for (let i = coinHistory.data.history.length - 1; i >= 0; i -= 1) {
-    coinPrice.push(coinHistory.data.history[i].price);
-    coinTimestamp.push(
-        new Date(coinHistory.data.history[i].timestamp * 1000)
-            .getHours()
-            .toString() +
-        ":" +
-        new Date(coinHistory.data.history[i].timestamp * 1000)
-            .getMinutes()
-            .toString(),
-    );
-  }
-
-  const data = {
+  const data: RootDataset = {
     labels: coinTimestamp,
     datasets: [
       {
-        label: "Цена в USD",
+        label: 'Price In USD',
         data: coinPrice,
         fill: false,
-        backgroundColor: "#0071bd",
-        borderColor: "#0071bd",
+        backgroundColor: '#0071bd',
+        borderColor: '#0071bd',
       },
     ],
   };
 
-  const options = {
+  const options: RootScales | any = {
     scales: {
-      y: {
-        beginAtZero: true,
-      },
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
     },
   };
 
   return (
       <>
         <Row className="chart-header">
-          <Title level={2} className="chart-title">
-            {coinName} График цены{" "}
-          </Title>
+          <Title level={2} className="chart-title">{coinName} Price Chart</Title>
           <Col className="price-container">
-            <Title level={5} className="price-change">
-              Изменения за сутки: {coinHistory.data.change}%
-            </Title>
-            <Title level={5} className="current-price">
-              Текущая цена {coinName}: $ {currentPrice}
-            </Title>
+            <Title level={5} className="price-change">Change: {coinHistory?.data?.change || 'N/A'}%</Title>
+            <Title level={5} className="current-price">Current {coinName} Price: $ {currentPrice}</Title>
           </Col>
         </Row>
         <Line data={data} options={options} />
