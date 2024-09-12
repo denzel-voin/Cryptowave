@@ -6,16 +6,24 @@ import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCi
 import { useGetCryptoDetailsQuery, useGetCryptoHistoryQuery } from '../../services/cryptoApi';
 import { LineChart } from "../LineChart/LineChart";
 import {DetailCoin, DetailRoot, HistoryData, Link} from "../../../types/types";
+import {useEffect, useState} from "react";
 
 const { Title, Text } = Typography;
 
 export const CryptoDetails = () => {
   const { coinId } = useParams<{ coinId: string }>();
   const timeperiod = '24h';
+  const [dataAlreadyFetched, setDataAlreadyFetched] = useState(false);
   // @ts-ignore
   const { data: cryptoDetailsData, isFetching } = useGetCryptoDetailsQuery<DetailRoot>(coinId!, { skip: dataAlreadyFetched });
   // @ts-ignore
   const { data: coinHistoryData, isFetching: isFetchingHistory } = useGetCryptoHistoryQuery<HistoryData>({ coinId, timeperiod }, { skip: dataAlreadyFetched });
+
+  useEffect(() => {
+    if (cryptoDetailsData && !isFetching && coinHistoryData && !isFetchingHistory) {
+      setDataAlreadyFetched(true);
+    }
+  }, [cryptoDetailsData, isFetching, coinHistoryData, isFetchingHistory]);
 
   if (isFetching || isFetchingHistory) {
     return <Spin size="large" />;

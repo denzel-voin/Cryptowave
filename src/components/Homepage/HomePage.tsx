@@ -5,12 +5,21 @@ import { Link } from "react-router-dom";
 import { News } from "../News/News";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import {Root, Stats} from "../../../types/types.ts";
+import {useEffect, useState} from "react";
 
 const { Title } = Typography;
 
 export const HomePage = () => {
-    // @ts-ignore
-  const { data, isFetching } = useGetCryptosQuery<Root>(10, { skip: dataAlreadyFetched });
+    const [dataAlreadyFetched, setDataAlreadyFetched] = useState(false);
+
+    //@ts-ignore
+    const { data, isFetching } = useGetCryptosQuery<Root>(10, { skip: dataAlreadyFetched });
+
+    useEffect(() => {
+        if (data && !isFetching) {
+            setDataAlreadyFetched(true);
+        }
+    }, [data, isFetching]);
 
     if (isFetching) {
         return <Spin size="large" />;

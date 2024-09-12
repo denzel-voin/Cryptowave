@@ -7,23 +7,25 @@ import {Coin, Root} from "../../../types/types.ts";
 
 export const Cryptocurrencies = ({ simplified }: { simplified: boolean }) => {
   const count = simplified ? 10 : 100;
+  const [dataAlreadyFetched, setDataAlreadyFetched] = useState(false);
   // @ts-ignore
   const { data: cryptosList, isFetching } = useGetCryptosQuery<Root>(count, { skip: dataAlreadyFetched });
   const [cryptos, setCryptos] = useState<Coin[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  if (isFetching) {
-    return <Spin size="large" />;
-  }
-
   useEffect(() => {
     if (cryptosList?.data?.coins) {
+      setDataAlreadyFetched(true);
       const filteredData: Coin[] = cryptosList.data.coins.filter((item) =>
           item.name.toLowerCase().includes(searchTerm)
       );
       setCryptos(filteredData);
     }
   }, [cryptosList, searchTerm]);
+
+  if (isFetching) {
+    return <Spin size="large" />;
+  }
 
   return (
     <>
