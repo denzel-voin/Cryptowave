@@ -6,8 +6,8 @@ export interface Root {
 export interface Data {
   data: {
     stats: Stats;
+    coins: Coin[];
   }
-  coins: Coin[];
 }
 
 export interface Stats {

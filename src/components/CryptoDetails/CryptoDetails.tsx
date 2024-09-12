@@ -13,9 +13,9 @@ export const CryptoDetails = () => {
   const { coinId } = useParams<{ coinId: string }>();
   const timeperiod = '24h';
   // @ts-ignore
-  const { data: cryptoDetailsData, isFetching } = useGetCryptoDetailsQuery<DetailRoot>(coinId!);
+  const { data: cryptoDetailsData, isFetching } = useGetCryptoDetailsQuery<DetailRoot>(coinId!, { skip: dataAlreadyFetched });
   // @ts-ignore
-  const { data: coinHistoryData, isFetching: isFetchingHistory } = useGetCryptoHistoryQuery<HistoryData>({ coinId, timeperiod });
+  const { data: coinHistoryData, isFetching: isFetchingHistory } = useGetCryptoHistoryQuery<HistoryData>({ coinId, timeperiod }, { skip: dataAlreadyFetched });
 
   if (isFetching || isFetchingHistory) {
     return <Spin size="large" />;

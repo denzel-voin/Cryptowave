@@ -17,7 +17,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route
                 path="/cryptocurrencies"
-                element={<Cryptocurrencies simplified />}
+                element={<Cryptocurrencies simplified={false} />}
               />
               <Route path="/news" element={<News simplified />} />
               <Route path="/crypto/:coinId" element={<CryptoDetails />} />
@@ -27,7 +27,7 @@ function App() {
         <div className="footer">
           <Space>
             <Link to="/">Главная</Link>
-            <Link to="/exchanges">Обменник</Link>
+            <Link to="/cryptocurrencies">Криптовалюта</Link>
             <Link to="/news">Новости</Link>
           </Space>
         </div>

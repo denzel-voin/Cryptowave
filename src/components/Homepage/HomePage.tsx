@@ -10,7 +10,7 @@ const { Title } = Typography;
 
 export const HomePage = () => {
     // @ts-ignore
-  const { data, isFetching } = useGetCryptosQuery<Root>(10);
+  const { data, isFetching } = useGetCryptosQuery<Root>(10, { skip: dataAlreadyFetched });
 
     if (isFetching) {
         return <Spin size="large" />;
@@ -63,7 +63,7 @@ export const HomePage = () => {
           <Link to="/cryptocurrencies">Ещё</Link>
         </Title>
       </div>
-      <Cryptocurrencies simplified />
+      <Cryptocurrencies simplified={true} />
       <div className="home-heading-container">
         <Title level={2} className="home-title">
           Последние новости криптовалют

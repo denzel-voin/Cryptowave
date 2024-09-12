@@ -1,16 +1,24 @@
 import { Card, Col, Row, Typography, Avatar, Spin } from "antd";
 import { useGetCryptoNewsQuery } from "../../services/cryptoNewsApi";
 import {INews, RootNews} from "../../../types/types.ts";
+import {useEffect, useState} from "react";
 
 const { Title, Text } = Typography;
 
 export const News = ({ simplified }: { simplified: boolean }) => {
+  const [dataAlreadyFetched, setDataAlreadyFetched] = useState(false);
   // @ts-ignore
   const { data: newsData, isFetching } = useGetCryptoNewsQuery<RootNews>({
     text: "криптовалюта",
     language: "ru",
     limit: simplified ? 6 : 12,
-  }) || { data: { news: [] }, isFetching: false };
+  }, { skip: dataAlreadyFetched }) || { data: { news: [] }, isFetching: false };
+
+  useEffect(() => {
+    if (newsData && !isFetching) {
+      setDataAlreadyFetched(true);
+    }
+  }, [newsData, isFetching]);
 
   if (isFetching) {
     return <Spin size="large" />;

@@ -1,26 +1,29 @@
 import millify from "millify";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
 import { useEffect, useState } from "react";
-import { Card, Col, Input, Row } from "antd";
+import {Card, Col, Input, Row, Spin} from "antd";
 import { Link } from "react-router-dom";
+import {Coin, Root} from "../../../types/types.ts";
 
 export const Cryptocurrencies = ({ simplified }: { simplified: boolean }) => {
   const count = simplified ? 10 : 100;
-  const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
-  const [cryptos, setCryptos] = useState();
+  // @ts-ignore
+  const { data: cryptosList, isFetching } = useGetCryptosQuery<Root>(count, { skip: dataAlreadyFetched });
+  const [cryptos, setCryptos] = useState<Coin[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  if (isFetching) {
+    return <Spin size="large" />;
+  }
+
   useEffect(() => {
-    setCryptos(cryptosList?.data?.coins);
-
-    const filteredData = cryptosList?.data?.coins.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm),
-    );
-
-    setCryptos(filteredData);
+    if (cryptosList?.data?.coins) {
+      const filteredData: Coin[] = cryptosList.data.coins.filter((item) =>
+          item.name.toLowerCase().includes(searchTerm)
+      );
+      setCryptos(filteredData);
+    }
   }, [cryptosList, searchTerm]);
-
-  if (isFetching) return "Loading...";
 
   return (
     <>
@@ -47,9 +50,9 @@ export const Cryptocurrencies = ({ simplified }: { simplified: boolean }) => {
                 extra={<img className="crypto-image" src={currency.iconUrl} />}
                 hoverable
               >
-                <p>Цена: {millify(currency.price) + "$"}</p>
+                <p>Цена: {millify(Number(currency.price)) + "$"}</p>
                 <p>
-                  Рыночная капитализация: {millify(currency.marketCap) + "$"}
+                  Рыночная капитализация: {millify(Number(currency.marketCap)) + "$"}
                 </p>
                 <p
                   style={

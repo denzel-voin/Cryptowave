@@ -15,7 +15,7 @@ interface INewsItem {
 interface RootNews {
   news: INewsItem[];
 }
-
+// @ts-ignore
 export const cryptoNewsApi = createApi({
   reducerPath: "cryptoNewsApi",
   baseQuery: fetchBaseQuery({
