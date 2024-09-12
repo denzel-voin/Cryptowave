@@ -2,7 +2,7 @@ import HTMLReactParser from 'html-react-parser';
 import { useParams } from 'react-router-dom';
 import millify from 'millify';
 import { Col, Row, Typography, Spin } from 'antd';
-import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined} from '@ant-design/icons';
 import { useGetCryptoDetailsQuery, useGetCryptoHistoryQuery } from '../../services/cryptoApi';
 import { LineChart } from "../LineChart/LineChart";
 import {DetailCoin, DetailRoot, HistoryData, Link} from "../../../types/types";
@@ -12,24 +12,24 @@ const { Title, Text } = Typography;
 export const CryptoDetails = () => {
   const { coinId } = useParams<{ coinId: string }>();
   const timeperiod = '24h';
-  const { data: cryptoDetailsData, isFetching } = useGetCryptoDetailsQuery<DetailRoot | undefined>(coinId!);
+  // @ts-ignore
+  const { data: cryptoDetailsData, isFetching } = useGetCryptoDetailsQuery<DetailRoot>(coinId!);
+  // @ts-ignore
   const { data: coinHistoryData, isFetching: isFetchingHistory } = useGetCryptoHistoryQuery<HistoryData>({ coinId, timeperiod });
 
   if (isFetching || isFetchingHistory) {
     return <Spin size="large" />;
   }
 
-  if (!cryptoDetailsData || !cryptoDetailsData.data || !coinHistoryData || !coinHistoryData.data) {
+  if (!cryptoDetailsData || !coinHistoryData) {
     return <div>Данные не найдены</div>;
   }
 
-  const cryptoDetails = cryptoDetailsData.data.coin;
-  const coinHistory = coinHistoryData.data.history;
+  const cryptoDetails: DetailCoin = cryptoDetailsData.data.coin;
 
   const stats = [
     { title: 'Price to USD', value: `$ ${cryptoDetails.price && millify(Number(cryptoDetails.price))}`, icon: <DollarCircleOutlined /> },
     { title: 'Rank', value: cryptoDetails.rank, icon: <NumberOutlined /> },
-    { title: '24h Volume', value: `$ ${cryptoDetails.volume && millify(cryptoDetails.volume)}`, icon: <ThunderboltOutlined /> },
     { title: 'Market Cap', value: `$ ${cryptoDetails.marketCap && millify(Number(cryptoDetails.marketCap))}`, icon: <DollarCircleOutlined /> },
     { title: 'All-time-high(daily avg.)', value: `$ ${cryptoDetails.allTimeHigh?.price && millify(Number(cryptoDetails.allTimeHigh.price))}`, icon: <TrophyOutlined /> },
   ];
@@ -52,7 +52,7 @@ export const CryptoDetails = () => {
         </Col>
         <LineChart
             coinHistory={coinHistoryData}
-            currentPrice={millify(Number(cryptoDetails.price)) as number}
+            currentPrice={Math.round(Number(cryptoDetails.price))}
             coinName={cryptoDetails.name}
         />
         <Col className="stats-container">

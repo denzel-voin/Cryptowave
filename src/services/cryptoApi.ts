@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {Data, Coin, HistoryData} from "../../types/types.ts";
+import {Data, HistoryData, DetailRoot} from "../../types/types.ts";
 
 const cryptoApiHeaders = {
   "x-rapidapi-host": "coinranking1.p.rapidapi.com",
@@ -9,7 +9,7 @@ const cryptoApiHeaders = {
 const baseUrl = "https://coinranking1.p.rapidapi.com";
 
 const createRequest = (url: string) => ({ url, headers: cryptoApiHeaders });
-
+// @ts-ignore
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -19,7 +19,7 @@ export const cryptoApi = createApi({
       keepUnusedDataFor: 14400,
     }),
 
-    getCryptoDetails: builder.query<Coin, string>({
+    getCryptoDetails: builder.query<DetailRoot, string>({
       query: (coinId) => createRequest(`/coin/${coinId}`),
       keepUnusedDataFor: 14400,
     }),
@@ -29,7 +29,6 @@ export const cryptoApi = createApi({
           createRequest(`coin/${coinId}/history?timeperiod=${timeperiod}`),
       keepUnusedDataFor: 14400,
     }),
-
   }),
 });
 

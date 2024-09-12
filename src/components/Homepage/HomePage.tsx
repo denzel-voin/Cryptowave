@@ -1,17 +1,22 @@
 import millify from "millify";
-import { Col, Row, Statistic, Typography } from "antd";
+import {Col, Row, Spin, Statistic, Typography} from "antd";
 import { Cryptocurrencies } from "../Cryptocurrencies/Cryptocurrencies";
 import { Link } from "react-router-dom";
 import { News } from "../News/News";
 import { useGetCryptosQuery } from "../../services/cryptoApi";
+import {Root, Stats} from "../../../types/types.ts";
 
 const { Title } = Typography;
 
 export const HomePage = () => {
-  const { data, isFetching } = useGetCryptosQuery(10);
-  const globalStats = data?.data?.stats;
+    // @ts-ignore
+  const { data, isFetching } = useGetCryptosQuery<Root>(10);
 
-  if (isFetching) return "Loading...";
+    if (isFetching) {
+        return <Spin size="large" />;
+    }
+
+    const globalStats: Stats = data.data.stats;
 
   return (
     <>
@@ -34,13 +39,13 @@ export const HomePage = () => {
         <Col span={12}>
           <Statistic
             title="Общая рыночная капитализация:"
-            value={millify(globalStats.totalMarketCap) + "$"}
+            value={millify(Number(globalStats.totalMarketCap)) + " $"}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Общий объем за 24 часа"
-            value={millify(globalStats.total24hVolume) + "$"}
+            value={millify(Number(globalStats.total24hVolume)) + " $"}
           />
         </Col>
         <Col span={12}>

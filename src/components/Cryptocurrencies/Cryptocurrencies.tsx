@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, Col, Input, Row } from "antd";
 import { Link } from "react-router-dom";
 
-export const Cryptocurrencies = ({ simplified }: {simplified: boolean}) => {
+export const Cryptocurrencies = ({ simplified }: { simplified: boolean }) => {
   const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
   const [cryptos, setCryptos] = useState();
