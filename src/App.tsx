@@ -14,7 +14,7 @@ function App() {
         <Layout>
           <div className="routes">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/Cryptowave" element={<HomePage />} />
               <Route
                 path="/cryptocurrencies"
                 element={<Cryptocurrencies simplified={false} />}

@@ -1,50 +1,31 @@
-# React + TypeScript + Vite
+# Криптовалютный сайт CryptoWave
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это проект веб-сайта по криптовалютам, созданный с использованием Vite. Сайт позволяет пользователям просматривать информацию о криптовалютах, а также получать последние новости.
 
-Currently, two official plugins are available:
+## Функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Просмотр информации о криптовалютах, включая цену, рыночную капитализацию, объем торгов и другие данные.
+- Отображение графиков с помощью `Chart.js` для визуализации рыночных трендов.
+- Получение новостей из мира криптовалют с использованием World news API.
+- Поддержка маршрутизации с помощью `react-router-dom`.
 
-## Expanding the ESLint configuration
+## Технологии
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Vite** — для сборки и разработки.
+- **React** — для создания интерфейса.
+- **Redux Toolkit** — для управления состоянием.
+- **Ant Design** — для готовых UI-компонентов.
+- **Chart.js** — для отображения графиков.
+- **Axios** — для выполнения HTTP-запросов.
+- **Prettier** и **ESLint** — для форматирования и линтинга кода.
 
-- Configure the top-level `parserOptions` property like this:
+## Скрипты
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+- `dev`: запуск проекта в режиме разработки.
+- `build`: сборка проекта для продакшена.
+- `lint`: запуск линтера для проверки кода.
+- `format`: форматирование кода с помощью Prettier.
+- `preview`: просмотр собранного приложения.
+- `deploy`: деплой собранного приложения на GitHub Pages.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+## [Деплой](https://denzel-voin.github.io/Cryptowave/)

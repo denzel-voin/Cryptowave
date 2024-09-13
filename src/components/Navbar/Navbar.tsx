@@ -28,13 +28,13 @@ export const Navbar = () => {
         <div className="nav-container">
             <div className="logo-container">
                 <Avatar src='./logo.jpeg' size="large" />
-                <Typography.Title level={2} className="logo"><Link to="/">CryptoWave</Link></Typography.Title>
+                <Typography.Title level={2} className="logo"><Link to="/Cryptowave">CryptoWave</Link></Typography.Title>
                 <Button className="menu-control-container" onClick={() => setActiveMenu(!activeMenu)}><MenuOutlined /></Button>
             </div>
             {activeMenu && (
                 <Menu theme="dark">
                     <Menu.Item icon={<HomeOutlined />}>
-                        <Link to="/">Главная</Link>
+                        <Link to="/Cryptowave">Главная</Link>
                     </Menu.Item>
                     <Menu.Item icon={<FundOutlined />}>
                         <Link to="/cryptocurrencies">Криптовалюты</Link>
